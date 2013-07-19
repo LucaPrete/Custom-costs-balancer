@@ -54,13 +54,13 @@ Using Eclipse, after the import of the Floodlight project:
   * Copy TopologyInstanceCCBalancer.java, TopologyManagerCCBalancer.java and ITopologyServiceCCBalancer
     in net.floodlightcontroller.topology
   * Modify the file src/main/resources/META-INF/services/net.floodlightcontroller.core.module.IFloodlightModule
-    ** net.floodlightcontroller.topology.TopologyManagerCCBalancer instead of
+      + net.floodlightcontroller.topology.TopologyManagerCCBalancer instead of
        net.floodlightcontroller.topology.TopologyManager
-    ** add it.garr.ccbalancer.CCBalancer
+      + add it.garr.ccbalancer.CCBalancer
   * Modify the file src/main/resources/floodlight.properties
-    ** net.floodlightcontroller.topology.TopologyManagerCCBalancer instead of
+      + net.floodlightcontroller.topology.TopologyManagerCCBalancer instead of
        net.floodlightcontroller.topology.TopologyManager
-    ** add it.garr.ccbalancer.CCBalancer
+      + add it.garr.ccbalancer.CCBalancer
 
 Runnable file
 -------------
