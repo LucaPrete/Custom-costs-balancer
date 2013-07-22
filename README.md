@@ -131,10 +131,14 @@ In the scripts folder, this projects provides some scripts that could be helpful
 examples:
 
  * ``chktx.py`` is a python script that reads transmitted bits values of all interfaces using default Floodlight REST
-   API. It saves results to a MS Excel datasheet.
+   API. It saves results to a MS Excel datasheet. It requires both xlrd and xlwt python libraries to manage Ms Excel
+   files. 
  * ``update.py`` is a python script that reads the transmitted bits values (if some values are saved) from a MS Excel
    datasheet, it computes the values to an integer cost through a sample algorithm and it sends final values to the
-   topology module on the controller.
+   topology module on the controller. It requires xlrd python libraries to read Ms Excel files.
+
+More info on xlrd on https://pypi.python.org/pypi/xlrd
+More info on xlwt on https://pypi.python.org/pypi/xlwt
 
 update.py algorithm
 -------------------
