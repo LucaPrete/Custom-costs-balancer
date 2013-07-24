@@ -1,3 +1,41 @@
+/**
+ * Copyright (C) 2013 Luca Prete, Simone Visconti, Andrea Biancini, Fabio Farina - www.garr.it - Consortium GARR
+ *
+ * This is an extended, modified version of the original TopologyManager
+ * file provided with Floodlight 0.90
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * Implementation of the Floodlight TopologyManager for CCBalancer service.
+ * Topology manager is responsible for maintaining the controller's notion
+ * of the network graph, as well as implementing tools for finding routes 
+ * through the topology.
+ * 
+ * @author Luca Prete <luca.prete@garr.it>
+ * @author Andrea Biancini <andrea.biancini@garr.it>
+ * @author Fabio Farina <fabio.farina@garr.it>
+ * @author Simone Visconti<simone.visconti.89@gmail.com>
+ * 
+ * @version 0.90
+ * @see it.garr.mpbalance.CCBalancer
+ * @see it.garr.mpbalance.ICCBalancerListener
+ * @see it.garr.mpbalance.ICCBalancerService
+ * @see it.garr.mpbalance.web.CCBalancerTopoListResource
+ * @see it.garr.mpbalance.web.CCBalancerWebRoutable
+ * @see net.floodlightcontroller.topology.TopologyInstanceCCBalancer
+ * 
+ */
+
 package net.floodlightcontroller.topology;
 
 import it.garr.ccbalancer.ICCBalancerListener;
@@ -54,21 +92,6 @@ import org.openflow.protocol.action.OFActionOutput;
 import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-/**
- * Implementation of the Floodlight TopologyManager for CCBalancer service.
- *
- * @author Luca Prete <luca.prete@garr.it>
- * @author Andrea Biancini <andrea.biancini@garr.it>
- * @author Fabio Farina <fabio.farina@garr.it>
- * @author Simone Visconti<simone.visconti.89@gmail.com>
- * 
- * @version 0.90
- *
- * Topology manager is responsible for maintaining the controller's notion
- * of the network graph, as well as implementing tools for finding routes 
- * through the topology.
- */
 
 @LogMessageCategory("Network Topology")
 public class TopologyManagerCCBalancer extends ServerResource implements 
