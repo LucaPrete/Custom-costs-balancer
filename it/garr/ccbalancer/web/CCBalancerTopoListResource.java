@@ -48,7 +48,9 @@ import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 public class CCBalancerTopoListResource extends ServerResource {
 	
@@ -84,76 +86,36 @@ public class CCBalancerTopoListResource extends ServerResource {
     }
 
 	private HashMap<Link, Integer> jsonToLinkCost(String fmJson) throws IOException {
-		HashMap<Link, Integer> linkCost = new HashMap<Link, Integer>();
-        MappingJsonFactory f = new MappingJsonFactory();
-        JsonParser jp;
-
-        try {
-            jp = f.createJsonParser(fmJson);
-        } catch (JsonParseException e) {
-            throw new IOException(e);
-        }
-        
-        jp.nextToken();
-
-        if (jp.getText() != "[") {
-        	
-            throw new IOException("Expected START_ARRAY");
-        }
-        jp.nextToken();
-        while (jp.getCurrentToken() != JsonToken.END_ARRAY ) {
-        	
-        	jp.nextToken();
-            String n = null;
+		try {
+			JSONArray jarray = new JSONArray(fmJson);
+			
+			HashMap<Link, Integer> linkCost = new HashMap<Link, Integer>();
+			
         	long src = 0;
         	short outport = 0;
         	long dst = 0;
         	short inport = 0;
-        	Integer cost = 0;
-         	
-        	n = jp.getCurrentName();
-        	// Adding source
-        	if (n == "src"){
-        		jp.nextToken();
-        		src = HexString.toLong(jp.getText());
-        	} else throw new IOException("Expected source");
-        	
-        	jp.nextToken();
-        	 n = jp.getCurrentName();	
-        	// Adding outport
-        	if (n == "outPort"){
-        		jp.nextToken();
-        		outport = Short.valueOf(jp.getText());
-        	} else throw new IOException("Expected outPort");        	
-        	
-        	jp.nextToken();
-        	n = jp.getCurrentName();
-        	// Adding Cost
-        	if(n == "cost"){
-        		jp.nextToken();
-        		cost = Integer.valueOf(jp.getText());
-        	} else throw new IOException("Expected cost");
-        	
-        	jp.nextToken();
-        	n = jp.getCurrentName();   	
-        	// Adding destination
-        	if (n == "dst"){
-        		jp.nextToken();
-        		dst = HexString.toLong(jp.getText());
-        	} else throw new IOException("Expected destination");
-        	
-        	jp.nextToken();
-        	n = jp.getCurrentName();
-        	// Adding source
-        	if (n == "inPort"){
-        		jp.nextToken();
-        		inport = Short.valueOf(jp.getText());
-        	} else throw new IOException("Expected inPort");
-        	
-        	jp.nextToken();
-        	jp.nextToken();
-        	linkCost.put(new Link(src, outport, dst, inport), cost);
-        }
+        	int cost = 0;
+		
+			for (int i=0 ; i < jarray.length ; i++){
+					JSONObject jobj = jarray.getJSONObject(i);
+					src = HexString.toLong(jobj.getString("src"));
+					outport = (short) jobj.getInt("outPort");
+					dst = HexString.toLong(jobj.getString("dst"));
+					inport = (short) jobj.getInt("inPort");
+					cost = jobj.getInt("cost");
+					linkCost.put(new Link(src, outport, dst, inport), cost);
+			}
+		}catch(JSONException e) {
+			if(!fmJson.startsWith("[]")) throw new IOException("Expected START_ARRAY");
+			else if (e.getMessage().contains("src") && e.getMessage().endsWith("not found.")) throw new IOException("Expected source");
+			else if (e.getMessage().contains("outPort") && e.getMessage().endsWith("not found."))throw new IOException("Expected outPort");
+			else if (e.getMessage().contains("cost") && e.getMessage().endsWith("not found.")) throw new IOException("Expected cost");
+			else if (e.getMessage().contains("dst") && e.getMessage().endsWith("not found.")) throw new IOException("Expected destination");
+			else if (e.getMessage().contains("inPort") && e.getMessage().endsWith("not found.")) throw new IOException("Expected inPort");
+			System.out.println(e.getMessage());
+		}
+		
         return linkCost;
 	}	
 }
