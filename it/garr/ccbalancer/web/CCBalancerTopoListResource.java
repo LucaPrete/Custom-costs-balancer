@@ -107,7 +107,7 @@ public class CCBalancerTopoListResource extends ServerResource {
 					linkCost.put(new Link(src, outport, dst, inport), cost);
 			}
 		}catch(JSONException e) {
-			if(!fmJson.startsWith("[]")) throw new IOException("Expected START_ARRAY");
+			if(!fmJson.startsWith("[")) throw new IOException("Expected START_ARRAY");
 			else if (e.getMessage().contains("src") && e.getMessage().endsWith("not found.")) throw new IOException("Expected source");
 			else if (e.getMessage().contains("outPort") && e.getMessage().endsWith("not found."))throw new IOException("Expected outPort");
 			else if (e.getMessage().contains("cost") && e.getMessage().endsWith("not found.")) throw new IOException("Expected cost");
